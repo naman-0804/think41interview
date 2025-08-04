@@ -24,6 +24,22 @@ def list_customers():
     except Exception as e:
         print(" Error:", e)
         return jsonify({"error": str(e)}), 500
+@app.route("/orders", methods=["GET"])
+def list_orders():
+    try:
+        print("🔌 Connecting to MongoDB...")
+        client = MongoClient(uri, serverSelectionTimeoutMS=5000)
+        db = client['think41']
+        order_collection = db['orders']
+        print(" Connection established")
+
+        orderss = list(order_collection.find({}, {'_id': 0}).limit(10))
+        print(f" Retrieved {len(orderss)} records")
+
+        return jsonify({"customers": orderss, "count": len(orderss)})
+    except Exception as e:
+        print(" Error:", e)
+        return jsonify({"error": str(e)}), 500
 if __name__ == "__main__":
     print("🚀 Flask server running...")
     app.run(debug=True)
