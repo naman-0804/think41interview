@@ -1,0 +1,8 @@
+from pymongo import MongoClient
+uri="mongodb+srv://namansrivastava1608:fxI2C833oZjW66s7@cluster0.ity4hgk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+try:
+    client=MongoClient(uri)
+    client.server_info()
+    print("Connected")
+except Exception as e:
+    print("fail")
